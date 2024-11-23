@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29EFF129-D181-471B-939B-05374FAEB871}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Plugin.LoadedAssemblies.dll.nuspec = Plugin.LoadedAssemblies.dll.nuspec
+		README.md = README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{06D963D4-9A0B-4B2B-A3C3-B1A534140FD0}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +17,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{
 		.github\workflows\test.yml = .github\workflows\test.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugin.LoadedAssemblies35", "Plugin.LoadedAssemblies\Plugin.LoadedAssemblies35.csproj", "{C9380F35-D2F7-412B-8B67-9647E261803A}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9380F35-D2F7-412B-8B67-9647E261803A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9380F35-D2F7-412B-8B67-9647E261803A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9380F35-D2F7-412B-8B67-9647E261803A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9380F35-D2F7-412B-8B67-9647E261803A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <package>
 	<metadata>
-		<id>AlphaOmega.SAL.Plugin.TEMPLATENAME</id>
+		<id>AlphaOmega.SAL.Plugin.LoadedAssemblies</id>
 		<version>0.0.0.0</version>
 		<authors>DKorablin</authors>
 		<license type="expression">Apache-1.0</license>
 		<readme>docs\README.md</readme>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<projectUrl>https://dkorablin.ru/project/Default.aspx?File=126</projectUrl>
-		<repository type="git" url="https://github.com/DKorablin/Plugins.TEMPLATE_PROJECT_NAME" />
-		<description>TEMPLATE DESCRIPTION</description>
+		<projectUrl>https://dkorablin.ru/</projectUrl>
+		<repository type="git" url="https://github.com/DKorablin/Plugin.LoadedAssemblies" />
+		<description>This plugin is made to view the list of all loaded assemblies and libraries into current process In order of loading</description>
 		<releaseNotes></releaseNotes>
 		<copyright>Danila Korablin</copyright>
 		<tags>SAL,Plugin</tags>
 		<dependencies>
-			<group targetFramework="net20">
+			<group targetFramework="net45">
 				<dependency id="SAL.Flatbed" version="1.2.9" />
 				<dependency id="SAL.Windows" version="1.2.9" />
 			</group>
@@ -22,7 +22,7 @@
 	</metadata>
 	<files>
 		<file src="readme.md" target="docs" />
-		<!--file src="bin\net20\Plugin.TEMPLATENAME.xml" target="xml" /-->
-		<file src="bin\net20\Plugin.TEMPLATENAME.dll" target="lib\net20" />
+		<!--file src="bin\net20\Plugin.LoadedAssemblies.xml" target="xml" /-->
+		<file src="bin\net20\Plugin.LoadedAssemblies.dll" target="lib\net45" />
 	</files>
 </package>

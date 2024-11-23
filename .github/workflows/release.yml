@@ -10,7 +10,7 @@ env:
 jobs:
   test_net_windows:
     name: Testing .NET (Windows)
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
     - uses: actions/checkout@v4
       with:
@@ -70,7 +70,7 @@ jobs:
     name: Building .NET Framework assembly
     needs: [version,files_exists]
     if: needs.files_exists.outputs.net_framework_project_exists == 'true'
-    runs-on: windows-latest
+    runs-on: windows-2019
     steps:
     - name: Decoding SNK
       id: sign_key_file

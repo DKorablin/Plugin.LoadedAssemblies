@@ -14,7 +14,7 @@
 		<copyright>Danila Korablin</copyright>
 		<tags>SAL,Plugin,Reflection,Assembly,CLR</tags>
 		<dependencies>
-			<group targetFramework="net45">
+			<group targetFramework="net48">
 				<dependency id="SAL.Windows" version="1.2.10" />
 			</group>
 		</dependencies>
@@ -22,6 +22,6 @@
 	<files>
 		<file src="README.md" target="docs" />
 		<!--file src="bin\net20\Plugin.LoadedAssemblies.xml" target="xml" /-->
-		<file src="bin\net20\Plugin.LoadedAssemblies.dll" target="lib\net45" />
+		<file src="bin\net20\Plugin.LoadedAssemblies.dll" target="lib\net48" />
 	</files>
 </package>

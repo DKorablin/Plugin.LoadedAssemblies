@@ -12,16 +12,15 @@
 		<description>This plugin is made to view the list of all loaded assemblies and libraries into current process In order of loading</description>
 		<releaseNotes></releaseNotes>
 		<copyright>Danila Korablin</copyright>
-		<tags>SAL,Plugin</tags>
+		<tags>SAL,Plugin,Reflection,Assembly,CLR</tags>
 		<dependencies>
 			<group targetFramework="net45">
-				<dependency id="SAL.Flatbed" version="1.2.9" />
-				<dependency id="SAL.Windows" version="1.2.9" />
+				<dependency id="SAL.Windows" version="1.2.10" />
 			</group>
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="readme.md" target="docs" />
+		<file src="README.md" target="docs" />
 		<!--file src="bin\net20\Plugin.LoadedAssemblies.xml" target="xml" /-->
 		<file src="bin\net20\Plugin.LoadedAssemblies.dll" target="lib\net45" />
 	</files>

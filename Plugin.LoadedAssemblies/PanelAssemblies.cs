@@ -5,7 +5,6 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
-using AlphaOmega.Windows.Forms;
 using SAL.Windows;
 
 namespace Plugin.LoadedAssemblies
@@ -14,12 +13,17 @@ namespace Plugin.LoadedAssemblies
 	{
 		private const String CaptionArgs1 = "Assemblies ({0:N0})";
 
+		private static readonly Color DynamicColor = Color.Green;
+		private static readonly Color ErrorColor = Color.Red;
+		private static readonly Color DublicateColor = Color.Orange;
+
 		private PluginWindows Plugin => (PluginWindows)this.Window.Plugin;
+
 		private IWindow Window => (IWindow)base.Parent;
 
 		public PanelAssemblies()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 			splitMain.Panel2Collapsed = true;
 		}
 
@@ -65,22 +69,26 @@ namespace Plugin.LoadedAssemblies
 						if(assembly.ManifestModule.Name == "<In Memory Module>")
 						{
 							location = assembly.ManifestModule.Name;
-							item.ForeColor = Color.Orange;//IsDynamic
+							item.ForeColor = DynamicColor;//IsDynamic
 						} else
 						{
 							location = assembly.Location;
 							assemblyPath.Add(location);
 						}
 						item.SubItems[colPath.Index].Text = location;
+
+						// Checking for dublicate assemblies. For example different plugins may reference different versions
+						if(Array.FindAll(assemblies, a => { return a.GetName().Name == assembly.GetName().Name; }).Length > 1)
+							item.ForeColor = DublicateColor;
 					} catch(FileNotFoundException exc)
 					{
 						item.SubItems[colPath.Index].Text = exc.Message;
-						item.ForeColor = Color.Red;
+						item.ForeColor = ErrorColor;
 						this.Plugin.Trace.TraceData(System.Diagnostics.TraceEventType.Error, 10, exc);
 					} catch(NotSupportedException exc)
 					{
 						item.SubItems[colPath.Index].Text = exc.Message;
-						item.ForeColor = Color.Red;
+						item.ForeColor = ErrorColor;
 						this.Plugin.Trace.TraceData(System.Diagnostics.TraceEventType.Error, 10, exc);
 					}
 

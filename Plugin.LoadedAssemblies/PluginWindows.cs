@@ -49,16 +49,16 @@ namespace Plugin.LoadedAssemblies
 				return false;
 			}
 
-			this._menuTest = menuView.FindMenuItem("Test");
+			this._menuTest = menuView.FindMenuItem("Executables");
 			if(this._menuTest == null)
 			{
-				this._menuTest = menuView.Create("Test");
-				this._menuTest.Name = "View.Test";
+				this._menuTest = menuView.Create("Executables");
+				this._menuTest.Name = "View.Executable";
 				menuView.Items.Add(this._menuTest);
 			}
 
 			this._menuAssembly = this._menuTest.Create("Loaded &Assemblies");
-			this._menuAssembly.Name = "View.Test.LoadedAssemblies";
+			this._menuAssembly.Name = "View.Executable.LoadedAssemblies";
 			this._menuAssembly.Click += (sender, e) => { this.CreateWindow(typeof(PanelAssemblies).ToString(), false); };
 
 			this._menuTest.Items.Add(this._menuAssembly);

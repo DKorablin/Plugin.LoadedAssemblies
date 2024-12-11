@@ -48,6 +48,7 @@
 			this.ssMain = new System.Windows.Forms.StatusStrip();
 			this.lblElapsed = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsmiAssembliesExplore = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiAssembliesShowDependencies = new System.Windows.Forms.ToolStripMenuItem();
 			this.tsMain.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
 			this.splitMain.Panel1.SuspendLayout();
@@ -153,7 +154,8 @@
 			// 
 			this.cmsAssemblies.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.cmsAssemblies.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmiAssembliesExplore});
+			this.tsmiAssembliesExplore,
+			this.tsmiAssembliesShowDependencies});
 			this.cmsAssemblies.Name = "cmsAssemblies";
 			this.cmsAssemblies.Size = new System.Drawing.Size(211, 80);
 			this.cmsAssemblies.Opening += new System.ComponentModel.CancelEventHandler(this.cmsAssemblies_Opening);
@@ -236,6 +238,12 @@
 			this.tsmiAssembliesExplore.Size = new System.Drawing.Size(210, 24);
 			this.tsmiAssembliesExplore.Text = "Show in &Folder";
 			// 
+			// tsmiAssembliesShowDependencies
+			// 
+			this.tsmiAssembliesShowDependencies.Name = "tsmiAssembliesShowDependencies";
+			this.tsmiAssembliesShowDependencies.Size = new System.Drawing.Size(210, 24);
+			this.tsmiAssembliesShowDependencies.Text = "Show in &Dependencies";
+			// 
 			// PanelAssemblies
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -281,5 +289,6 @@
 		private System.Windows.Forms.ToolStripStatusLabel lblElapsed;
 		private AlphaOmega.Windows.Forms.ContextMenuStripCopy cmsAssemblies;
 		private System.Windows.Forms.ToolStripMenuItem tsmiAssembliesExplore;
+		private System.Windows.Forms.ToolStripMenuItem tsmiAssembliesShowDependencies;
 	}
 }

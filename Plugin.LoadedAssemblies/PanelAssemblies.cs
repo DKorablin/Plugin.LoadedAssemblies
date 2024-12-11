@@ -181,15 +181,31 @@ namespace Plugin.LoadedAssemblies
 				isDirectoryExists = Directory.Exists(Path.GetDirectoryName(filePath));
 			}
 			tsmiAssembliesExplore.Enabled = isDirectoryExists;
+			tsmiAssembliesShowDependencies.Enabled = selectedItem?.Tag is Assembly;
 		}
 
 		private void cmsAssemblies_ItemClicked(Object sender, ToolStripItemClickedEventArgs e)
 		{
+			ListViewItem selectedItem = lvAssemblies.SelectedItems.Count == 1 ? lvAssemblies.SelectedItems[0] : null;
+
 			if(e.ClickedItem == tsmiAssembliesExplore)
 			{
-				ListViewItem selectedItem = lvAssemblies.SelectedItems.Count == 1 ? lvAssemblies.SelectedItems[0] : null;
 				String filePath = selectedItem.SubItems[colPath.Index].Text;
 				Shell32.OpenFolderAndSelectItem(Path.GetDirectoryName(filePath), Path.GetFileName(filePath));
+			} else if(e.ClickedItem == tsmiAssembliesShowDependencies)
+			{
+				Assembly assembly = (Assembly)selectedItem.Tag;
+				Boolean ensureFirstVisible = false;
+				foreach(ListViewItem item in lvAssemblies.Items)
+				{
+					item.Selected = item.Tag is Assembly dependency
+						&& Array.Exists(dependency.GetReferencedAssemblies(), d => d.FullName == assembly.FullName);
+					if(!ensureFirstVisible)
+					{
+						item.EnsureVisible();
+						ensureFirstVisible = true;
+					}
+				}
 			}
 		}
 	}

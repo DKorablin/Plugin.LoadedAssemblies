@@ -59,8 +59,16 @@ namespace Plugin.LoadedAssemblies
 					item.SubItems[colRuntimeVersion.Index].Text = assembly.ImageRuntimeVersion;
 					try
 					{
-						if(assembly.EntryPoint != null)
-							item.SubItems[colEntryPoint.Index].Text = assembly.EntryPoint.Name;
+						try
+						{
+							if(assembly.EntryPoint != null)
+								item.SubItems[colEntryPoint.Index].Text = assembly.EntryPoint.Name;
+						}catch(FileLoadException exc)
+						{
+							item.SubItems[colEntryPoint.Index].Text = exc.Message;
+							item.ForeColor = ErrorColor;
+							this.Plugin.Trace.TraceData(System.Diagnostics.TraceEventType.Error, 10, exc);
+						}
 
 						if(selectedAssemblyFullName == assembly.FullName)
 							item.Selected = true;

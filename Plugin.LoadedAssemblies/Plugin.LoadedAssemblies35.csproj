@@ -53,6 +53,7 @@
       <Link>Controls\DbListView.cs</Link>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ListViewColumnSorter.cs" />
     <Compile Include="MsCorEE.cs" />
     <Compile Include="PanelAssemblies.cs">
       <SubType>UserControl</SubType>

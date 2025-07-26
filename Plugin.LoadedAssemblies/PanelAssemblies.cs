@@ -5,6 +5,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using Plugin.LoadedAssemblies.Controls;
 using SAL.Windows;
 
 namespace Plugin.LoadedAssemblies
@@ -16,6 +17,7 @@ namespace Plugin.LoadedAssemblies
 		private static readonly Color DynamicColor = Color.Green;
 		private static readonly Color ErrorColor = Color.Red;
 		private static readonly Color DublicateColor = Color.Orange;
+		private readonly ListViewColumnSorter lvColumnSorter = new ListViewColumnSorter();
 
 		private PluginWindows Plugin => (PluginWindows)this.Window.Plugin;
 
@@ -25,6 +27,7 @@ namespace Plugin.LoadedAssemblies
 		{
 			this.InitializeComponent();
 			splitMain.Panel2Collapsed = true;
+			lvAssemblies.ListViewItemSorter = lvColumnSorter;
 		}
 
 		protected override void OnCreateControl()
@@ -112,7 +115,7 @@ namespace Plugin.LoadedAssemblies
 					{
 						item.SubItems[colName.Index].Text = module.ModuleName;
 						item.SubItems[colPath.Index].Text = module.FileName;
-						item.SubItems[colEntryPoint.Index].Text = module.EntryPointAddress.ToString();
+						item.SubItems[colEntryPoint.Index].Text = "0x" + module.EntryPointAddress.ToString("x12");
 						item.SubItems[colRuntimeVersion.Index].Text = module.FileVersionInfo.ProductVersion;
 					} catch(FileNotFoundException exc)
 					{
@@ -166,6 +169,23 @@ namespace Plugin.LoadedAssemblies
 				{
 					splitMain.Panel2Collapsed = true;
 				}
+		}
+
+		private void lvAssemblies_ColumnClick(Object sender, ColumnClickEventArgs e)
+		{
+			if(e.Column == lvColumnSorter.SortColumn)
+			{
+				if(lvColumnSorter.Order == SortOrder.Ascending)
+					lvColumnSorter.Order = SortOrder.Descending;
+				else
+					lvColumnSorter.Order = SortOrder.Ascending;
+			} else
+			{
+				lvColumnSorter.SortColumn = e.Column;
+				lvColumnSorter.Order = SortOrder.Ascending;
+			}
+
+			lvAssemblies.Sort();
 		}
 
 		private void tsbnRefresh_Click(Object sender, EventArgs e)

@@ -123,7 +123,6 @@
             listViewGroup1,
             listViewGroup2,
             listViewGroup3});
-			this.lvAssemblies.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lvAssemblies.HideSelection = false;
 			this.lvAssemblies.Location = new System.Drawing.Point(0, 0);
 			this.lvAssemblies.Margin = new System.Windows.Forms.Padding(4);
@@ -133,6 +132,7 @@
 			this.lvAssemblies.UseCompatibleStateImageBehavior = false;
 			this.lvAssemblies.View = System.Windows.Forms.View.Details;
 			this.lvAssemblies.SelectedIndexChanged += new System.EventHandler(this.lvAssemblies_SelectedIndexChanged);
+			this.lvAssemblies.ColumnClick += this.lvAssemblies_ColumnClick;
 			// 
 			// colName
 			// 

@@ -153,7 +153,7 @@ namespace Plugin.LoadedAssemblies
 				if(selectedItem.Tag is Assembly assembly)
 				{
 					splitMain.Panel2Collapsed = false;
-					String[] subItems = Array.ConvertAll<String, String>(new String[lvAssemblies.Columns.Count], delegate (String a) { return String.Empty; });
+					String[] subItems = Array.ConvertAll(new String[lvAssemblies.Columns.Count], a => String.Empty);
 					AssemblyName[] assemblyNames = assembly.GetReferencedAssemblies();
 					List<ListViewItem> itemsToAdd = new List<ListViewItem>(assemblyNames.Length);
 					foreach(AssemblyName asmName in assemblyNames)

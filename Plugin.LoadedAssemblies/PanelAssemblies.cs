@@ -16,7 +16,7 @@ namespace Plugin.LoadedAssemblies
 
 		private static readonly Color DynamicColor = Color.Green;
 		private static readonly Color ErrorColor = Color.Red;
-		private static readonly Color DublicateColor = Color.Orange;
+		private static readonly Color DuplicatedColor = Color.Orange;
 		private readonly ListViewColumnSorter lvColumnSorter = new ListViewColumnSorter();
 
 		private PluginWindows Plugin => (PluginWindows)this.Window.Plugin;
@@ -88,9 +88,9 @@ namespace Plugin.LoadedAssemblies
 						}
 						item.SubItems[colPath.Index].Text = location;
 
-						// Checking for dublicate assemblies. For example different plugins may reference different versions
-						if(Array.FindAll(assemblies, a => { return a.GetName().Name == assembly.GetName().Name; }).Length > 1)
-							item.ForeColor = DublicateColor;
+						// Checking for duplicated assemblies. For example different plugins may reference different versions
+						if(Array.FindAll(assemblies, a => a.GetName().Name == assembly.GetName().Name).Length > 1)
+							item.ForeColor = DuplicatedColor;
 					} catch(FileNotFoundException exc)
 					{
 						item.SubItems[colPath.Index].Text = exc.Message;

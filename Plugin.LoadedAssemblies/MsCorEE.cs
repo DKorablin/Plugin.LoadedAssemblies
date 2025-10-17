@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+
 namespace Plugin.LoadedAssemblies
 {
 	internal static class MsCorEE
 	{
+#if NET35
 		public static IEnumerable<_AppDomain> EnumAppDomains()
 		{
 			// Obtain ICLRMetaHost interface
@@ -95,5 +97,6 @@ namespace Plugin.LoadedAssemblies
 			void CloseEnum(IntPtr hEnum);
 			// rest omitted
 		}
+#endif
 	}
 }

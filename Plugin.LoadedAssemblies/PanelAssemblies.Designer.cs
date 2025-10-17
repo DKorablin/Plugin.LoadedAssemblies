@@ -28,9 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Assemblies", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup2 = new System.Windows.Forms.ListViewGroup("Modules", System.Windows.Forms.HorizontalAlignment.Left);
-			System.Windows.Forms.ListViewGroup listViewGroup3 = new System.Windows.Forms.ListViewGroup("AppDomains", System.Windows.Forms.HorizontalAlignment.Left);
 			this.tsMain = new System.Windows.Forms.ToolStrip();
 			this.tsbnRefresh = new System.Windows.Forms.ToolStripButton();
 			this.splitMain = new System.Windows.Forms.SplitContainer();
@@ -44,7 +41,6 @@
 			this.tabModules = new System.Windows.Forms.TabPage();
 			this.lvReferences = new System.Windows.Forms.ListView();
 			this.colModuleName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.ssMain = new System.Windows.Forms.StatusStrip();
 			this.lblElapsed = new System.Windows.Forms.ToolStripStatusLabel();
 			this.tsmiAssembliesExplore = new System.Windows.Forms.ToolStripMenuItem();
@@ -113,16 +109,6 @@
 			this.lvAssemblies.ContextMenuStrip = this.cmsAssemblies;
 			this.lvAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvAssemblies.FullRowSelect = true;
-			listViewGroup1.Header = "Assemblies";
-			listViewGroup1.Name = "lvgAssembly";
-			listViewGroup2.Header = "Modules";
-			listViewGroup2.Name = "lvgModules";
-			listViewGroup3.Header = "AppDomains";
-			listViewGroup3.Name = "lvgAppDomains";
-			this.lvAssemblies.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
-            listViewGroup1,
-            listViewGroup2,
-            listViewGroup3});
 			this.lvAssemblies.HideSelection = false;
 			this.lvAssemblies.Location = new System.Drawing.Point(0, 0);
 			this.lvAssemblies.Margin = new System.Windows.Forms.Padding(4);
@@ -164,7 +150,6 @@
 			// tabAssembly
 			// 
 			this.tabAssembly.Controls.Add(this.tabModules);
-			this.tabAssembly.Controls.Add(this.tabPage2);
 			this.tabAssembly.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabAssembly.Location = new System.Drawing.Point(0, 0);
 			this.tabAssembly.Margin = new System.Windows.Forms.Padding(4);
@@ -204,17 +189,6 @@
 			// colModuleName
 			// 
 			this.colModuleName.Text = "Name";
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.Location = new System.Drawing.Point(4, 25);
-			this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-			this.tabPage2.Size = new System.Drawing.Size(192, 35);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "tabPage2";
-			this.tabPage2.UseVisualStyleBackColor = true;
 			// 
 			// ssMain
 			// 
@@ -281,7 +255,6 @@
 		private System.Windows.Forms.SplitContainer splitMain;
 		private System.Windows.Forms.TabControl tabAssembly;
 		private System.Windows.Forms.TabPage tabModules;
-		private System.Windows.Forms.TabPage tabPage2;
 		private System.Windows.Forms.ListView lvReferences;
 		private System.Windows.Forms.ColumnHeader colModuleName;
 		private System.Windows.Forms.ColumnHeader colEntryPoint;

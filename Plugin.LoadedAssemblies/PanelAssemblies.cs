@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using Plugin.LoadedAssemblies.Controls;
 using SAL.Windows;
@@ -12,14 +13,15 @@ namespace Plugin.LoadedAssemblies
 {
 	public partial class PanelAssemblies : UserControl
 	{
-		private const String CaptionArgs1 = "Assemblies ({0:N0})";
+		private const String CaptionArgs1 = "Libraries ({0:N0})";
 
 		private static readonly Color DynamicColor = Color.Green;
 		private static readonly Color ErrorColor = Color.Red;
 		private static readonly Color DuplicatedColor = Color.Orange;
+		private static readonly Color ReferencedColor = Color.Blue;
 		private readonly ListViewColumnSorter lvColumnSorter = new ListViewColumnSorter();
 
-		private PluginWindows Plugin => (PluginWindows)this.Window.Plugin;
+		private Plugin Plugin => (Plugin)this.Window.Plugin;
 
 		private IWindow Window => (IWindow)base.Parent;
 
@@ -53,11 +55,11 @@ namespace Plugin.LoadedAssemblies
 				Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
 				List<ListViewItem> itemsToAdd = new List<ListViewItem>(assemblies.Length);
 				HashSet<String> assemblyPath = new HashSet<String>();
-				String[] subItems = Array.ConvertAll<String, String>(new String[lvAssemblies.Columns.Count], delegate(String a) { return String.Empty; });
+				String[] subItems = Array.ConvertAll<String, String>(new String[lvAssemblies.Columns.Count], c => String.Empty);
 
 				foreach(Assembly assembly in assemblies)
 				{
-					ListViewItem item = new ListViewItem(subItems) { Tag = assembly, Group=lvAssemblies.Groups[0], };
+					ListViewItem item = new ListViewItem(subItems) { Tag = assembly, Group = GetListViewGroup(lvAssemblies,"Assemblies"), };
 					item.SubItems[colName.Index].Text = assembly.FullName;
 					item.SubItems[colRuntimeVersion.Index].Text = assembly.ImageRuntimeVersion;
 					try
@@ -88,6 +90,9 @@ namespace Plugin.LoadedAssemblies
 						}
 						item.SubItems[colPath.Index].Text = location;
 
+						if(Array.Exists(assemblies, a => a.GetName().Name != assembly.GetName().Name
+							&& Array.Exists(a.GetReferencedAssemblies(), r => r.FullName == assembly.FullName)))
+							item.ForeColor = ReferencedColor;
 						// Checking for duplicated assemblies. For example different plugins may reference different versions
 						if(Array.FindAll(assemblies, a => a.GetName().Name == assembly.GetName().Name).Length > 1)
 							item.ForeColor = DuplicatedColor;
@@ -110,7 +115,7 @@ namespace Plugin.LoadedAssemblies
 					if(assemblyPath.Contains(module.FileName))
 						continue;//We placed this module to assembly list already
 
-					ListViewItem item = new ListViewItem(subItems) { Tag = module, Group = lvAssemblies.Groups[1], };
+					ListViewItem item = new ListViewItem(subItems) { Tag = module, Group = GetListViewGroup(lvAssemblies, "Modules"), };
 					try
 					{
 						item.SubItems[colName.Index].Text = module.ModuleName;
@@ -145,6 +150,17 @@ namespace Plugin.LoadedAssemblies
 			}
 		}
 
+		private static ListViewGroup GetListViewGroup(ListView lv, String groupHeaderName)
+		{
+			foreach(ListViewGroup group in lv.Groups)
+				if(group.Header == groupHeaderName)
+					return group;
+
+			ListViewGroup newGroup = new ListViewGroup(groupHeaderName);
+			lv.Groups.Add(newGroup);
+			return newGroup;
+		}
+
 		private void lvAssemblies_SelectedIndexChanged(Object sender, EventArgs e)
 		{
 			ListViewItem selectedItem = lvAssemblies.SelectedItems.Count == 1 ? lvAssemblies.SelectedItems[0] : null;
@@ -153,22 +169,29 @@ namespace Plugin.LoadedAssemblies
 				if(selectedItem.Tag is Assembly assembly)
 				{
 					splitMain.Panel2Collapsed = false;
-					String[] subItems = Array.ConvertAll(new String[lvAssemblies.Columns.Count], a => String.Empty);
 					AssemblyName[] assemblyNames = assembly.GetReferencedAssemblies();
 					List<ListViewItem> itemsToAdd = new List<ListViewItem>(assemblyNames.Length);
 					foreach(AssemblyName asmName in assemblyNames)
 					{
-						ListViewItem item = new ListViewItem() { Tag = assembly, };
+						ListViewItem item = new ListViewItem() { Tag = assembly, Group = GetListViewGroup(lvReferences, "Referenced") };
 						item.SubItems[colModuleName.Index].Text = asmName.FullName;
 						itemsToAdd.Add(item);
 					}
 
+					foreach(Assembly loadedAssembly in AppDomain.CurrentDomain.GetAssemblies())
+					{
+						if(Array.Exists(loadedAssembly.GetReferencedAssemblies(), a => a.Name == assembly.GetName().Name))
+						{
+							ListViewItem item = new ListViewItem() { Tag = loadedAssembly, Group = GetListViewGroup(lvReferences, "Reference") };
+							item.SubItems[colModuleName.Index].Text = loadedAssembly.FullName;
+							itemsToAdd.Add(item);
+						}
+					}
+
 					lvReferences.Items.AddRange(itemsToAdd.ToArray());
 					lvReferences.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
-				}else if(selectedItem.Tag is ProcessModule module)
-				{
+				}else if(selectedItem.Tag is ProcessModule)
 					splitMain.Panel2Collapsed = true;
-				}
 		}
 
 		private void lvAssemblies_ColumnClick(Object sender, ColumnClickEventArgs e)
@@ -189,9 +212,7 @@ namespace Plugin.LoadedAssemblies
 		}
 
 		private void tsbnRefresh_Click(Object sender, EventArgs e)
-		{
-			this.ShowAssemblies();
-		}
+			=> this.ShowAssemblies();
 
 		private void splitMain_MouseDoubleClick(Object sender, MouseEventArgs e)
 		{

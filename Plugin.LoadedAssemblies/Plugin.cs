@@ -6,14 +6,14 @@ using SAL.Windows;
 
 namespace Plugin.LoadedAssemblies
 {
-	public class PluginWindows : IPlugin
+	public class Plugin : IPlugin
 	{
 		private TraceSource _trace;
 		private Dictionary<String, DockState> _documentTypes;
 		private IMenuItem _menuTest;
 		private IMenuItem _menuAssembly;
 
-		internal TraceSource Trace { get { return this._trace ?? (this._trace = PluginWindows.CreateTraceSource<PluginWindows>()); } }
+		internal TraceSource Trace { get { return this._trace ?? (this._trace = Plugin.CreateTraceSource<Plugin>()); } }
 
 		internal IHostWindows HostWindows { get; }
 
@@ -30,7 +30,7 @@ namespace Plugin.LoadedAssemblies
 			}
 		}
 
-		public PluginWindows(IHostWindows hostWindows)
+		public Plugin(IHostWindows hostWindows)
 		{
 			this.HostWindows = hostWindows ?? throw new ArgumentNullException(nameof(hostWindows));
 		}

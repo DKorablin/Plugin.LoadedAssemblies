@@ -37,16 +37,17 @@
 			this.colEntryPoint = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.cmsAssemblies = new AlphaOmega.Windows.Forms.ContextMenuStripCopy();
+			this.tsmiAssembliesExplore = new System.Windows.Forms.ToolStripMenuItem();
+			this.tsmiAssembliesShowDependencies = new System.Windows.Forms.ToolStripMenuItem();
 			this.tabAssembly = new System.Windows.Forms.TabControl();
 			this.tabModules = new System.Windows.Forms.TabPage();
 			this.lvReferences = new System.Windows.Forms.ListView();
 			this.colModuleName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.ssMain = new System.Windows.Forms.StatusStrip();
 			this.lblElapsed = new System.Windows.Forms.ToolStripStatusLabel();
-			this.tsmiAssembliesExplore = new System.Windows.Forms.ToolStripMenuItem();
-			this.tsmiAssembliesShowDependencies = new System.Windows.Forms.ToolStripMenuItem();
+			this.colLoadContext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colLoadContextIsCollectible = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tsMain.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.splitMain)).BeginInit();
 			this.splitMain.Panel1.SuspendLayout();
 			this.splitMain.Panel2.SuspendLayout();
 			this.splitMain.SuspendLayout();
@@ -63,7 +64,7 @@
             this.tsbnRefresh});
 			this.tsMain.Location = new System.Drawing.Point(0, 0);
 			this.tsMain.Name = "tsMain";
-			this.tsMain.Size = new System.Drawing.Size(200, 27);
+			this.tsMain.Size = new System.Drawing.Size(150, 27);
 			this.tsMain.TabIndex = 0;
 			this.tsMain.Text = "toolStrip1";
 			// 
@@ -73,7 +74,7 @@
 			this.tsbnRefresh.Image = global::Plugin.LoadedAssemblies.Properties.Resources.iconRefresh;
 			this.tsbnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.tsbnRefresh.Name = "tsbnRefresh";
-			this.tsbnRefresh.Size = new System.Drawing.Size(29, 24);
+			this.tsbnRefresh.Size = new System.Drawing.Size(24, 24);
 			this.tsbnRefresh.ToolTipText = "Refresh";
 			this.tsbnRefresh.Click += new System.EventHandler(this.tsbnRefresh_Click);
 			// 
@@ -81,7 +82,6 @@
 			// 
 			this.splitMain.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.splitMain.Location = new System.Drawing.Point(0, 27);
-			this.splitMain.Margin = new System.Windows.Forms.Padding(4);
 			this.splitMain.Name = "splitMain";
 			this.splitMain.Orientation = System.Windows.Forms.Orientation.Horizontal;
 			// 
@@ -92,9 +92,8 @@
 			// splitMain.Panel2
 			// 
 			this.splitMain.Panel2.Controls.Add(this.tabAssembly);
-			this.splitMain.Size = new System.Drawing.Size(200, 136);
-			this.splitMain.SplitterDistance = 67;
-			this.splitMain.SplitterWidth = 5;
+			this.splitMain.Size = new System.Drawing.Size(150, 101);
+			this.splitMain.SplitterDistance = 49;
 			this.splitMain.TabIndex = 2;
 			this.splitMain.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.splitMain_MouseDoubleClick);
 			// 
@@ -105,20 +104,20 @@
             this.colName,
             this.colRuntimeVersion,
             this.colEntryPoint,
-            this.colPath});
+            this.colPath,
+            this.colLoadContext,
+            this.colLoadContextIsCollectible});
 			this.lvAssemblies.ContextMenuStrip = this.cmsAssemblies;
 			this.lvAssemblies.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvAssemblies.FullRowSelect = true;
 			this.lvAssemblies.HideSelection = false;
 			this.lvAssemblies.Location = new System.Drawing.Point(0, 0);
-			this.lvAssemblies.Margin = new System.Windows.Forms.Padding(4);
 			this.lvAssemblies.Name = "lvAssemblies";
-			this.lvAssemblies.Size = new System.Drawing.Size(200, 67);
+			this.lvAssemblies.Size = new System.Drawing.Size(150, 49);
 			this.lvAssemblies.TabIndex = 1;
 			this.lvAssemblies.UseCompatibleStateImageBehavior = false;
 			this.lvAssemblies.View = System.Windows.Forms.View.Details;
 			this.lvAssemblies.SelectedIndexChanged += new System.EventHandler(this.lvAssemblies_SelectedIndexChanged);
-			this.lvAssemblies.ColumnClick += this.lvAssemblies_ColumnClick;
 			// 
 			// colName
 			// 
@@ -140,32 +139,42 @@
 			// 
 			this.cmsAssemblies.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.cmsAssemblies.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.tsmiAssembliesExplore,
-			this.tsmiAssembliesShowDependencies});
+            this.tsmiAssembliesExplore,
+            this.tsmiAssembliesShowDependencies});
 			this.cmsAssemblies.Name = "cmsAssemblies";
-			this.cmsAssemblies.Size = new System.Drawing.Size(211, 80);
+			this.cmsAssemblies.Size = new System.Drawing.Size(194, 70);
 			this.cmsAssemblies.Opening += new System.ComponentModel.CancelEventHandler(this.cmsAssemblies_Opening);
 			this.cmsAssemblies.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.cmsAssemblies_ItemClicked);
+			// 
+			// tsmiAssembliesExplore
+			// 
+			this.tsmiAssembliesExplore.Name = "tsmiAssembliesExplore";
+			this.tsmiAssembliesExplore.Size = new System.Drawing.Size(193, 22);
+			this.tsmiAssembliesExplore.Text = "Show in &Folder";
+			// 
+			// tsmiAssembliesShowDependencies
+			// 
+			this.tsmiAssembliesShowDependencies.Name = "tsmiAssembliesShowDependencies";
+			this.tsmiAssembliesShowDependencies.Size = new System.Drawing.Size(193, 22);
+			this.tsmiAssembliesShowDependencies.Text = "Show in &Dependencies";
 			// 
 			// tabAssembly
 			// 
 			this.tabAssembly.Controls.Add(this.tabModules);
 			this.tabAssembly.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tabAssembly.Location = new System.Drawing.Point(0, 0);
-			this.tabAssembly.Margin = new System.Windows.Forms.Padding(4);
 			this.tabAssembly.Name = "tabAssembly";
 			this.tabAssembly.SelectedIndex = 0;
-			this.tabAssembly.Size = new System.Drawing.Size(200, 64);
+			this.tabAssembly.Size = new System.Drawing.Size(150, 48);
 			this.tabAssembly.TabIndex = 0;
 			// 
 			// tabModules
 			// 
 			this.tabModules.Controls.Add(this.lvReferences);
-			this.tabModules.Location = new System.Drawing.Point(4, 25);
-			this.tabModules.Margin = new System.Windows.Forms.Padding(4);
+			this.tabModules.Location = new System.Drawing.Point(4, 22);
 			this.tabModules.Name = "tabModules";
-			this.tabModules.Padding = new System.Windows.Forms.Padding(4);
-			this.tabModules.Size = new System.Drawing.Size(192, 35);
+			this.tabModules.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+			this.tabModules.Size = new System.Drawing.Size(142, 22);
 			this.tabModules.TabIndex = 0;
 			this.tabModules.Text = "References";
 			this.tabModules.UseVisualStyleBackColor = true;
@@ -178,10 +187,9 @@
 			this.lvReferences.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lvReferences.FullRowSelect = true;
 			this.lvReferences.HideSelection = false;
-			this.lvReferences.Location = new System.Drawing.Point(4, 4);
-			this.lvReferences.Margin = new System.Windows.Forms.Padding(4);
+			this.lvReferences.Location = new System.Drawing.Point(3, 3);
 			this.lvReferences.Name = "lvReferences";
-			this.lvReferences.Size = new System.Drawing.Size(184, 27);
+			this.lvReferences.Size = new System.Drawing.Size(136, 16);
 			this.lvReferences.TabIndex = 0;
 			this.lvReferences.UseCompatibleStateImageBehavior = false;
 			this.lvReferences.View = System.Windows.Forms.View.Details;
@@ -195,44 +203,38 @@
 			this.ssMain.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.ssMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblElapsed});
-			this.ssMain.Location = new System.Drawing.Point(0, 163);
+			this.ssMain.Location = new System.Drawing.Point(0, 128);
 			this.ssMain.Name = "ssMain";
-			this.ssMain.Size = new System.Drawing.Size(200, 22);
+			this.ssMain.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
+			this.ssMain.Size = new System.Drawing.Size(150, 22);
 			this.ssMain.TabIndex = 1;
 			this.ssMain.Text = "statusStrip1";
 			// 
 			// lblElapsed
 			// 
 			this.lblElapsed.Name = "lblElapsed";
-			this.lblElapsed.Size = new System.Drawing.Size(0, 16);
+			this.lblElapsed.Size = new System.Drawing.Size(0, 17);
 			// 
-			// tsmiAssembliesExplore
+			// colLoadContext
 			// 
-			this.tsmiAssembliesExplore.Name = "tsmiAssembliesExplore";
-			this.tsmiAssembliesExplore.Size = new System.Drawing.Size(210, 24);
-			this.tsmiAssembliesExplore.Text = "Show in &Folder";
+			this.colLoadContext.Text = "Load Context";
 			// 
-			// tsmiAssembliesShowDependencies
+			// colLoadContextIsCollectible
 			// 
-			this.tsmiAssembliesShowDependencies.Name = "tsmiAssembliesShowDependencies";
-			this.tsmiAssembliesShowDependencies.Size = new System.Drawing.Size(210, 24);
-			this.tsmiAssembliesShowDependencies.Text = "Show in &Dependencies";
+			this.colLoadContextIsCollectible.Text = "Is Collectible";
 			// 
 			// PanelAssemblies
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Controls.Add(this.splitMain);
 			this.Controls.Add(this.tsMain);
 			this.Controls.Add(this.ssMain);
-			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "PanelAssemblies";
-			this.Size = new System.Drawing.Size(200, 185);
 			this.tsMain.ResumeLayout(false);
 			this.tsMain.PerformLayout();
 			this.splitMain.Panel1.ResumeLayout(false);
 			this.splitMain.Panel2.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.splitMain)).EndInit();
 			this.splitMain.ResumeLayout(false);
 			this.cmsAssemblies.ResumeLayout(false);
 			this.tabAssembly.ResumeLayout(false);
@@ -263,5 +265,7 @@
 		private AlphaOmega.Windows.Forms.ContextMenuStripCopy cmsAssemblies;
 		private System.Windows.Forms.ToolStripMenuItem tsmiAssembliesExplore;
 		private System.Windows.Forms.ToolStripMenuItem tsmiAssembliesShowDependencies;
+		private System.Windows.Forms.ColumnHeader colLoadContext;
+		private System.Windows.Forms.ColumnHeader colLoadContextIsCollectible;
 	}
 }

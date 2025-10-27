@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 using Plugin.LoadedAssemblies.Controls;
 using SAL.Windows;
@@ -15,7 +14,7 @@ namespace Plugin.LoadedAssemblies
 	{
 		private const String CaptionArgs1 = "Libraries ({0:N0})";
 
-		private static readonly Color DynamicColor = Color.Green;
+		private static readonly Color DynamicColor = Color.Gray;
 		private static readonly Color ErrorColor = Color.Red;
 		private static readonly Color DuplicatedColor = Color.Orange;
 		private static readonly Color ReferencedColor = Color.Blue;
@@ -30,6 +29,11 @@ namespace Plugin.LoadedAssemblies
 			this.InitializeComponent();
 			splitMain.Panel2Collapsed = true;
 			lvAssemblies.ListViewItemSorter = lvColumnSorter;
+#if NET5_0_OR_GREATER
+#else
+			lvAssemblies.Columns.Remove(colLoadContext);
+			lvAssemblies.Columns.Remove(colLoadContextIsCollectible);
+#endif
 		}
 
 		protected override void OnCreateControl()
@@ -79,7 +83,7 @@ namespace Plugin.LoadedAssemblies
 							item.Selected = true;
 
 						String location;
-						if(assembly.ManifestModule.Name == "<In Memory Module>")
+						if(assembly.ManifestModule.Name == "<In Memory Module>" || assembly.ManifestModule.Name == "<Unknown>")
 						{
 							location = assembly.ManifestModule.Name;
 							item.ForeColor = DynamicColor;//IsDynamic
@@ -90,6 +94,14 @@ namespace Plugin.LoadedAssemblies
 						}
 						item.SubItems[colPath.Index].Text = location;
 
+#if NET5_0_OR_GREATER
+						System.Runtime.Loader.AssemblyLoadContext loadContext = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(assembly);
+						if(loadContext != null)
+						{
+							item.SubItems[colLoadContext.Index].Text = loadContext.Name;
+							item.SubItems[colLoadContextIsCollectible.Index].Text = loadContext.IsCollectible.ToString();
+						}
+#endif
 						if(Array.Exists(assemblies, a => a.GetName().Name != assembly.GetName().Name
 							&& Array.Exists(a.GetReferencedAssemblies(), r => r.FullName == assembly.FullName)))
 							item.ForeColor = ReferencedColor;

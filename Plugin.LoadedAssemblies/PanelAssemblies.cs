@@ -29,8 +29,7 @@ namespace Plugin.LoadedAssemblies
 			this.InitializeComponent();
 			splitMain.Panel2Collapsed = true;
 			lvAssemblies.ListViewItemSorter = lvColumnSorter;
-#if NET5_0_OR_GREATER
-#else
+#if NETFRAMEWORK
 			lvAssemblies.Columns.Remove(colLoadContext);
 			lvAssemblies.Columns.Remove(colLoadContextIsCollectible);
 #endif
@@ -94,7 +93,7 @@ namespace Plugin.LoadedAssemblies
 						}
 						item.SubItems[colPath.Index].Text = location;
 
-#if NET5_0_OR_GREATER
+#if !NETFRAMEWORK
 						System.Runtime.Loader.AssemblyLoadContext loadContext = System.Runtime.Loader.AssemblyLoadContext.GetLoadContext(assembly);
 						if(loadContext != null)
 						{

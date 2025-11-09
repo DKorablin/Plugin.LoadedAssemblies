@@ -12,7 +12,7 @@ namespace Plugin.LoadedAssemblies
 {
 	public partial class PanelAssemblies : UserControl
 	{
-		private const String CaptionArgs1 = "Libraries ({0:N0})";
+		private const String CaptionArgs1 = "Loaded Assemblies ({0:N0})";
 
 		private static readonly Color DynamicColor = Color.Gray;
 		private static readonly Color ErrorColor = Color.Red;

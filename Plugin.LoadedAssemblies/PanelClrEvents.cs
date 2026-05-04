@@ -10,8 +10,6 @@ namespace Plugin.LoadedAssemblies
 	{
 		private static readonly Color NotModified = Color.Gray;
 
-		private Plugin Plugin => (Plugin)this.Window.Plugin;
-
 		private IWindow Window => (IWindow)base.Parent;
 
 		private IDisposable _eventListener;

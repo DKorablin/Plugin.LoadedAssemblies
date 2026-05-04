@@ -20,7 +20,7 @@ namespace Plugin.LoadedAssemblies
 		private static readonly Color ReferencedColor = Color.Blue;
 		private readonly ListViewColumnSorter lvColumnSorter = new ListViewColumnSorter();
 
-		private Plugin Plugin => (Plugin)this.Window.Plugin;
+		private Plugin Plugin => (Plugin)this.Window.Plugin.Instance;
 
 		private IWindow Window => (IWindow)base.Parent;
 

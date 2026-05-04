@@ -8,13 +8,12 @@ namespace Plugin.LoadedAssemblies
 {
 	public class Plugin : IPlugin
 	{
-		private TraceSource _trace;
 		private Dictionary<String, DockState> _documentTypes;
 		private IMenuItem _menuTest;
 		private IMenuItem _menuAssembly;
 		private IMenuItem _menuClrEvents;
 
-		internal TraceSource Trace { get { return this._trace ?? (this._trace = Plugin.CreateTraceSource<Plugin>()); } }
+		internal ITraceSource Trace { get; }
 
 		internal IHostWindows HostWindows { get; }
 
@@ -32,9 +31,10 @@ namespace Plugin.LoadedAssemblies
 			}
 		}
 
-		public Plugin(IHostWindows hostWindows)
+		public Plugin(IHostWindows hostWindows, ITraceSource trace)
 		{
 			this.HostWindows = hostWindows ?? throw new ArgumentNullException(nameof(hostWindows));
+			this.Trace = trace ?? throw new ArgumentNullException(nameof(trace));
 		}
 
 		public IWindow GetPluginControl(String typeName, Object args)
@@ -88,14 +88,5 @@ namespace Plugin.LoadedAssemblies
 			=> this.DocumentTypes.TryGetValue(typeName, out DockState state)
 				? this.HostWindows.Windows.CreateWindow(this, typeName, searchForOpened, state, args)
 				: null;
-
-		private static TraceSource CreateTraceSource<T>(String name = null) where T : IPlugin
-		{
-			TraceSource result = new TraceSource(typeof(T).Assembly.GetName().Name + name);
-			result.Switch.Level = SourceLevels.All;
-			result.Listeners.Remove("Default");
-			result.Listeners.AddRange(System.Diagnostics.Trace.Listeners);
-			return result;
-		}
 	}
 }

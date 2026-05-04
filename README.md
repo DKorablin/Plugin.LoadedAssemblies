@@ -1,4 +1,4 @@
-# Loaded Assemblies Plugin
+﻿# Loaded Assemblies Plugin
 [![Auto build](https://github.com/DKorablin/Plugin.LoadedAssemblies/actions/workflows/release.yml/badge.svg)](https://github.com/DKorablin/Plugin.LoadedAssemblies/releases/latest)
 
 Plugin to inspect all assemblies currently loaded into the host process (in load order). Helps diagnose:
@@ -11,13 +11,18 @@ Plugin to inspect all assemblies currently loaded into the host process (in load
 * Physical path + flags (domain, dynamic, reflection-only if applicable to target)
 * On demand refresh
 * Context menu actions (copy rows / values)
-* Multi-target build: .NET Framework 3.5 + .NET 8 (Windows)
+* Multi-target build: .NET Framework 4.8 + .NET 8 (Windows)
 * Graceful fallbacks for APIs not available in .NET 8 (AppDomains enumeration differences, dynamic resource assembly creation, etc.)
 
 ## Installation
-1. Download latest release from GitHub Releases.
-2. Unpack into the host application's plugin/addins folder (depends on host solution this plugin targets).
-3. Start the host; plugin autodetects and lists assemblies.
+1. Download archive from GitHub releases (.zip or .nupkg).
+2. Place the plugin assembly into the host application plugin directory (SAL / host supporting Windows environment):
+	- [Flatbed.Dialog](https://dkorablin.github.io/Flatbed-Dialog/)
+	- [Flatbed.Dialog (Lite)](https://dkorablin.github.io/Flatbed-Dialog-Lite)
+	- [Flatbed.MDI](https://dkorablin.github.io/Flatbed-MDI)
+	- [Flatbed.MDI (WPF)](https://dkorablin.github.io/Flatbed-MDI-Avalon)
+	- [Flatbed.MDI (AvaloniaUI)](https://dkorablin.github.io/Flatbed-MDI-AvaloniaUI)
+3. Restart the host application; Plugin.LoadedAssemblies should appear in the plugin list (Tools -> Executables -> [Loaded Assemblies & CLR Events]).
 
 ## Usage
 1. Open the plugin panel (Loaded Assemblies).
@@ -32,7 +37,7 @@ Plugin to inspect all assemblies currently loaded into the host process (in load
 * Inspect dynamically emitted assemblies
 
 ## Build
-Requires .NET SDK 8 and legacy MSBuild (for net35). Steps:
+Requires .NET SDK 8 and legacy MSBuild (for net48). Steps:
 ```
 dotnet restore
 dotnet build -c Release
